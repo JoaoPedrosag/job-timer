@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:job_timer/app/core/ui/database/database.dart';
-import 'package:job_timer/app/entities/project.dart';
-import 'package:job_timer/app/entities/project.status.dart';
 import 'package:job_timer/app/modules/home/widgets/header_projects_menu.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
+        drawer: const Drawer(
           child: SafeArea(
               child: ListTile(
             title: Text("Sair"),
@@ -22,7 +16,7 @@ class HomePage extends StatelessWidget {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
-              SliverAppBar(
+              const SliverAppBar(
                 title: Text('Projetos'),
                 expandedHeight: 100,
                 toolbarHeight: 100,

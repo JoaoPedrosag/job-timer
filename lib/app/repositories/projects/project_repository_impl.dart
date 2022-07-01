@@ -5,7 +5,7 @@ import 'package:job_timer/app/core/ui/database/database.dart';
 import 'package:job_timer/app/core/ui/exceptions/failure.dart';
 import 'package:job_timer/app/entities/project.dart';
 
-import 'project_repository.dart';
+import './project_repository.dart';
 
 class ProjectRepositoryImpl implements ProjectRepository {
   final Database _database;
@@ -20,7 +20,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
       });
     } on IsarError catch (e, s) {
       log('Erro ao cadastrar projeto', error: e, stackTrace: s);
+      throw Failure(message: 'Erro ao cadastrar projeto');
     }
-    throw Failure(message: 'Erro ao cadastrar projeto');
   }
 }

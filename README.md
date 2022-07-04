@@ -4,7 +4,7 @@
 </p>
 
 <h2>🛠️ Packages Utilizadas </h2>
-- `Firebase`
+<p>- `Firebase`
   - Core
   - Auth | Sign-in
 - `Bloc/Cubit` para Gerenciamento de Estado e implementação do BLoC Pattern

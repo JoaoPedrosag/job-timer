@@ -1,11 +1,6 @@
-<h1 align="center">Job Timer</h1>
-<h2> Sobre </h2>
-<p>Job timer é um app com integração com firebase para gerenciamento de freelas, com tasks e quantidade horas trabalhadas.
-</p>
+<h2>🛠️ Funcionalidades e Tecnologias Estudadas</h2>
 
-<h2>🛠️ Packages Utilizadas </h2>
-<p>
--`Firebase`
+- `Firebase`
   - Core
   - Auth | Sign-in
 - `Bloc/Cubit` para Gerenciamento de Estado e implementação do BLoC Pattern
@@ -19,4 +14,7 @@
 - `Equatable` (para simplificar comparações de igualdade - sem `hashCode` e `==`)
 - `Asuka` (para SnackBars)
 - `Validatorless` (para inputs, inspirado no Yup)
-</p>
+- Muitas outras ferramentas e recursos abordados, com vários aprendizados diferenciados. 🔥
+   </p>
+
+---

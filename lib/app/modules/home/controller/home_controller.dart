@@ -9,7 +9,7 @@ import 'package:job_timer/app/view_models/project_view_model.dart';
 part 'home_state.dart';
 
 class HomeController extends Cubit<HomeState> {
-  ProjectService _projectService;
+  final ProjectService _projectService;
   HomeController({required ProjectService projectService})
       : _projectService = projectService,
         super(HomeState.initial());
@@ -18,7 +18,7 @@ class HomeController extends Cubit<HomeState> {
     try {
       emit(state.copyWith(status: HomeStatus.loading));
       final projects = await _projectService.findByStatus(state.projectFilter);
-      throw Exception();
+
       emit(state.copyWith(
         projects: projects,
         status: HomeStatus.complete,

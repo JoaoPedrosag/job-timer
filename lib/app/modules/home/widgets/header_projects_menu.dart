@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:job_timer/app/entities/project.status.dart';
+import 'package:job_timer/app/modules/home/controller/home_controller.dart';
 
 class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
+  final HomeController controller;
+
+  HeaderProjectsMenu({required this.controller});
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -44,8 +48,9 @@ class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
             SizedBox(
               width: constraints.maxWidth * .4,
               child: ElevatedButton.icon(
-                  onPressed: () {
-                    Modular.to.pushNamed('/project/register');
+                  onPressed: () async {
+                    await Modular.to.pushNamed('/project/register');
+                    controller.loadProjects();
                   },
                   icon: Icon(Icons.add),
                   label: Text("Novo Projeto")),

@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:isar/isar.dart';
-import 'package:job_timer/app/core/ui/database/database.dart';
-import 'package:job_timer/app/core/ui/exceptions/failure.dart';
+import 'package:job_timer/app/core/database/database.dart';
+import 'package:job_timer/app/core/exceptions/failure.dart';
 import 'package:job_timer/app/entities/project.dart';
 import 'package:job_timer/app/entities/project.status.dart';
 

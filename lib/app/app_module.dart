@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:job_timer/app/core/ui/database/database.dart';
-import 'package:job_timer/app/core/ui/database/database_impl.dart';
+import 'package:job_timer/app/core/database/database.dart';
+import 'package:job_timer/app/core/database/database_impl.dart';
+
 import 'package:job_timer/app/modules/home/home_module.dart';
 import 'package:job_timer/app/modules/login/login_module.dart';
 import 'package:job_timer/app/modules/project/register/project_module.dart';

@@ -1,14 +1,17 @@
 import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:job_timer/app/core/ui/button_with_loader.dart';
 import 'package:job_timer/app/modules/project/controller/project_register_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
 class ProjectRegisterPage extends StatefulWidget {
   final ProjectRegisterController controller;
-  const ProjectRegisterPage({super.key, required this.controller});
+
+  const ProjectRegisterPage({
+    super.key,
+    required this.controller,
+  });
 
   @override
   State<ProjectRegisterPage> createState() => _ProjectRegisterPageState();
@@ -16,13 +19,13 @@ class ProjectRegisterPage extends StatefulWidget {
 
 class _ProjectRegisterPageState extends State<ProjectRegisterPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameEc = TextEditingController();
-  final _estimateEc = TextEditingController();
+  final _nameController = TextEditingController();
+  final _estimateController = TextEditingController();
 
   @override
   void dispose() {
-    _nameEc.dispose();
-    _estimateEc.dispose();
+    _nameController.dispose();
+    _estimateController.dispose();
     super.dispose();
   }
 
@@ -33,95 +36,87 @@ class _ProjectRegisterPageState extends State<ProjectRegisterPage> {
       listener: (context, state) {
         switch (state) {
           case ProjectRegisterState.success:
-            Navigator.of(context).pop();
+            Navigator.pop(context);
             break;
           case ProjectRegisterState.failure:
-            AsukaSnackbar.alert('Erro ao salvar Projeto').show();
+            AsukaSnackbar.alert('Error when save project').show();
             break;
-
           default:
             break;
         }
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(
-            'Cadastro de Projeto',
-            style: TextStyle(color: Colors.black),
+            'Criar novo projeto',
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
           backgroundColor: Colors.white,
           iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0,
         ),
         body: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nameEc,
-                    validator:
-                        Validatorless.required('Nome do projeto é obrigatório'),
-                    decoration: InputDecoration(
-                      labelText: 'Nome',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.all(10),
-                    ),
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    label: Text('Project Name'),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  validator: Validatorless.required('Name is required'),
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: _estimateController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    label: Text('Hours estimates'),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Estimação é obrigatória'),
-                      Validatorless.number('Estimação deve ser numérica'),
-                    ]),
-                    controller: _estimateEc,
-                    decoration: InputDecoration(
-                      labelText: 'Estimativa de horas',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.all(10),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  BlocSelector<ProjectRegisterController, ProjectRegisterState,
-                      bool>(
-                    bloc: widget.controller,
-                    selector: (state) => state == ProjectRegisterState.loading,
-                    builder: (context, showLoading) {
-                      return Visibility(
-                        visible: showLoading,
-                        child: const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.height * .7,
-                    height: 49,
-                    child: ElevatedButton(
+                  validator: Validatorless.multiple([
+                    Validatorless.required('Hours is required'),
+                    Validatorless.number('Only numbers allowed.'),
+                  ]),
+                ),
+                const SizedBox(height: 12),
+                BlocSelector<ProjectRegisterController, ProjectRegisterState,
+                    bool>(
+                  bloc: widget.controller,
+                  selector: (state) => state == ProjectRegisterState.loading,
+                  builder: (context, state) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 49,
+                      child: ButtonWithLoader<ProjectRegisterController,
+                          ProjectRegisterState>(
+                        bloc: widget.controller,
+                        selector: (state) =>
+                            state == ProjectRegisterState.loading,
                         onPressed: () async {
                           final formValid =
                               _formKey.currentState?.validate() ?? false;
+
                           if (formValid) {
-                            final name = _nameEc.text;
-                            final estimate = int.parse(_estimateEc.text);
-                            await widget.controller.register(name, estimate);
+                            final name = _nameController.text;
+                            final estimate =
+                                int.parse(_estimateController.text);
+                            widget.controller.register(name, estimate);
                           }
                         },
-                        child: const Text('Salvar')),
-                  ),
-                ],
-              ),
-            )),
+                        label: 'Save',
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

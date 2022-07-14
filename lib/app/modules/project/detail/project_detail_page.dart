@@ -56,6 +56,9 @@ class ProjectDetailPage extends StatelessWidget {
   }
 
   Widget _buildProjectDetail(BuildContext context, ProjectModel projectModel) {
+    final totalTask = projectModel.tasks.fold<int>(0, (totalValue, task) {
+      return totalValue += task.duration;
+    });
     return CustomScrollView(
       slivers: [
         ProjectDetailAppbar(
@@ -64,12 +67,18 @@ class ProjectDetailPage extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 50, bottom: 50),
-                child: ProjectPieChart(),
+                child: ProjectPieChart(
+                  projectEstimate: projectModel.estimate,
+                  totalTasks: totalTask,
+                ),
               ),
-              ProjectTaskTile(),
-              ProjectTaskTile(),
+              ...projectModel.tasks
+                  .map((task) => ProjectTaskTile(
+                        task: task,
+                      ))
+                  .toList(),
             ],
           ),
         ),

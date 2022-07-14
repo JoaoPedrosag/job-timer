@@ -5,11 +5,18 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProjectPieChart extends StatelessWidget {
-  const ProjectPieChart({Key? key}) : super(key: key);
+  int projectEstimate;
+  int totalTasks;
+  ProjectPieChart({
+    Key? key,
+    required this.projectEstimate,
+    required this.totalTasks,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final residual = (projectEstimate - totalTasks);
     return SizedBox(
       width: 200,
       height: 200,
@@ -20,18 +27,18 @@ class ProjectPieChart extends StatelessWidget {
             PieChartData(
               sections: [
                 PieChartSectionData(
-                  value: 50,
+                  value: residual.toDouble(),
                   color: theme.primaryColor,
                   showTitle: true,
-                  title: '50h',
+                  title: '${residual}h',
                   titleStyle: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 PieChartSectionData(
-                    value: 150,
+                    value: totalTasks.toDouble(),
                     color: theme.primaryColorLight,
                     showTitle: true,
-                    title: '50h',
+                    title: '${totalTasks} h',
                     titleStyle: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
               ],
@@ -40,7 +47,7 @@ class ProjectPieChart extends StatelessWidget {
           Align(
               alignment: Alignment.center,
               child: Text(
-                '200h',
+                '${projectEstimate} h',
                 style: TextStyle(
                   fontSize: 25,
                   color: theme.primaryColor,

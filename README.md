@@ -14,7 +14,6 @@
 - `Equatable` (para simplificar comparações de igualdade - sem `hashCode` e `==`)
 - `Asuka` (para SnackBars)
 - `Validatorless` (para inputs, inspirado no Yup)
-- Muitas outras ferramentas e recursos abordados, com vários aprendizados diferenciados. 🔥
    </p>
 
 ---
